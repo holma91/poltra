@@ -1,6 +1,4 @@
-## TODO
-
-Vad kan vi göra innan vi börjar skriva något strukturerat?
+## Resurser
 
 bra python resurs: https://www.learnpython.dev/02-introduction-to-python/
 
@@ -13,22 +11,11 @@ bra python resurs: https://www.learnpython.dev/02-introduction-to-python/
 - hämta nyheter från omni, svt, osv med web scraping
   - https://realpython.com/beautiful-soup-web-scraper-python/
 
-## Nyhetskällor
+APIs:
 
-Försök att i första hand hitta sidor som har en API eller är statiska.
+- https://mediastack.com/
+- https://newsapi.org/
 
-som har en API:
+## Tankar
 
-- riksdagen.se
-
-som är statiska (vi kan använda beautifulSoup):
-
--
-
-som är dynamiska (vi måste använda selenium):
-
--
-
-## Senare
-
-skapa själva servicen
+Vi behöver nog inte skrapa något till en början, utan kan använda oss av mediastack och newsapi.
