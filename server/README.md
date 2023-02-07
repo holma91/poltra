@@ -23,4 +23,4 @@ To view the documentation, go to localhost:8000/docs or localhost:8000/redoc.
 
 ## Application
 
-Starting point is in main.py.
+Starting point is in main.py. Download the "Rest Client" extension for vscode and then test the different endpoints at test.http.
