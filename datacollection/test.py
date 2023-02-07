@@ -24,6 +24,8 @@ NEWSAPI_BASE = 'https://newsapi.org/v2'
 ### To run program: python test.py newsapi
 ### To run and dump the result into a json file: python test.py newsapi > filename.json
 
+
+
 def get_news(source):
   if source == "mediastack":
     sources = 'svd'
