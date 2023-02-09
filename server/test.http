@@ -1,0 +1,29 @@
+# get all articles
+GET http://localhost:8000/articles HTTP/1.1
+
+###
+
+# get article with id 5
+GET http://localhost:8000/articles/5 HTTP/1.1
+
+###
+
+# get articles from DN
+GET http://localhost:8000/articles?src=Www.dn.se HTTP/1.1
+
+###
+
+# add new article
+POST http://localhost:8000/articles HTTP/1.1
+content-type: application/json
+
+{
+    "source": { "id": "goteborgs-posten", "name": "G\u00f6teborgs-Posten" },
+    "author": "Ebba Bergstr\u00f6m",
+    "title": "Chauff\u00f6rer som k\u00f6r ut matkassar fr\u00e5n Ica varnar att de tappar kontroll \u00f6ver bilarna - G\u00f6teborgs-Posten",
+    "description": "F\u00f6rarna som levererar matkassar f\u00f6r Ica upplever stora problem med att k\u00f6ra ut leveranserna nu n\u00e4r sn\u00f6n \u00e4r tillbaka. Trots klagom\u00e5l sedan f\u00f6rra vintern har ingen av bilarna dubbd\u00e4ck och det vittnas om flera olyckor samt f\u00f6rare som tappat kontroll \u00f6ver bilen. \u2026",
+    "url": "https://www.gp.se/nyheter/g\u00f6teborg/matleveranser-fastnar-i-sn\u00f6n-n\u00e4r-ica-dissar-dubbd\u00e4ck-1.91447975",
+    "urlToImage": "https://www.gp.se/image/policy:1.91447969:1675441639/image.jpg?f=Wide%26w=1200%26%24p%24f%24w=834285a",
+    "publishedAt": "2023-02-03T16:13:52Z",
+    "content": "F\u00f6rare som k\u00f6r ut att Icas hemleveranser larmar om att matkassarna k\u00f6rs ut i bilar med d\u00e5liga lampor och utan dubbd\u00e4ck. Bilarna f\u00e5r inget grepp p\u00e5 v\u00e4gen n\u00e4r det sn\u00f6ar och ibland tappar de helt kontro\u2026 [+1913 chars]"
+}
