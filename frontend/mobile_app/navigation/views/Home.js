@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Button } from 'react-native';
 import database from '../../assets/data/database.json';
+import React, { useState } from 'react';
 
 export default function Home({ navigation }) {
+  const [showContent, setShowContent] = useState(false);
   console.log(database);
 
   return (
@@ -10,7 +12,14 @@ export default function Home({ navigation }) {
         return (
           <View style={styles.container} key={article.description}>
             <Text style={styles.titleText}>{article.title}</Text>
-            <Text style={styles.content}>{article.content}</Text>
+            {showContent ? (
+              <Text style={styles.content}>{article.content}</Text>
+            ) : null}
+            <Button
+              title={showContent ? 'Hide' : 'Läs mer!'}
+              onPress={() => setShowContent(!showContent)}
+            />
+
             <Text></Text>
             <Image
               source={{ uri: article.urlToImage }}
