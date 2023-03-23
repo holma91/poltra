@@ -1,30 +1,54 @@
 import { StyleSheet, Text, View, ScrollView, Image, Button } from 'react-native';
 import database from '../../assets/data/database.json';
 import React, { useState } from 'react';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 export default function Home({ navigation }) {
-  const [showContent, setShowContent] = useState(false);
-  console.log(database);
+  const [articleStates, setArticleStates] = useState(
+    database.slice(0, 5).map(() => false)
+  );
+
+  const handlePress = (index) => {
+    setArticleStates((prev) => {
+      const newState = [...prev];
+      newState[index] = !prev[index];
+      return newState;
+    });
+  };
 
   return (
     <ScrollView style={styles.wrapper}>
-      {database.slice(0, 5).map((article) => {
+      {database.slice(0, 5).map((article, index) => {
+        const isExpanded = articleStates[index];
         return (
           <View style={styles.container} key={article.description}>
-            <Text style={styles.titleText}>{article.title}</Text>
-            {showContent ? (
-              <Text style={styles.content}>{article.content}</Text>
-            ) : null}
-            <Button
-              title={showContent ? 'Hide' : 'Läs mer!'}
-              onPress={() => setShowContent(!showContent)}
-            />
-
-            <Text></Text>
+            <Text style={styles.category}>{article.category}</Text>
             <Image
               source={{ uri: article.urlToImage }}
-              style={{ width: '100%', height: '100%' }}
+              style={styles.image}
             />
+            
+            <Text style={styles.titleText}>{article.title}</Text>
+            <Text style={styles.content}>{article.content}</Text>
+            
+            <View style={styles.reactionContainer} key={article.category}>
+            <IonIcon style={styles.reactionIcon} name={"thumbs-up-outline"} color={'#2768E7'} size={75} />
+            <IonIcon style={styles.reactionIcon} name={"thumbs-down-outline"} color={'#2768E7'} size={75} />
+            </View>
+           
+              
+            
+            
+            {isExpanded && (
+              <Text style={styles.content}>Öppnar browser</Text>
+            )}
+            <View style={styles.buttonContainer}>
+              <Button
+                title={isExpanded ? 'Show less' : 'Läs mer!'}
+                onPress={() => handlePress(index)}
+                color="#007aff"
+              />
+            </View>
           </View>
         );
       })}
@@ -32,28 +56,69 @@ export default function Home({ navigation }) {
   );
 }
 
+
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1,
-    backgroundColor: '#CCCBCB',
+    padding: 25,
+    backgroundColor: '#759CEA',
+    opacity: 1,
   },
   container: {
-    flex: 1,
-    height: 600,
-    width: '100%',
-    borderRadius: 50,
-    backgroundColor: '#FFFFFF',
-    marginTop: 50,
-    alignItems: 'center',
+    backgroundColor: '#D9D9D9',
+    borderRadius: 20,
+    marginBottom: 20,
+    marginTop: 35,
+  
   },
   titleText: {
-    letterSpacing: '-2px',
-    fontSize: '28px',
-    textAlign: 'center',
+    fontSize: 24,
     fontWeight: 'bold',
-    marginTop: '12%',
+    
+    marginTop: 10,
+    paddingBottom: 10,
+    paddingTop: 10,
+    paddingRight: 20,
+    paddingLeft: 20,
+    
   },
   content: {
-    padding: 20,
+    fontSize: 16,
+    paddingBottom: 10,
+    paddingTop: 10,
+    paddingRight: 20,
+    paddingLeft: 20,
   },
+  image: {
+    width: '90%',
+    height: 200,
+    borderRadius: 20,
+    marginTop: 20,
+    marginLeft:'5%',
+    
+  },
+
+  buttonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#007aff',
+  },
+  reactionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  reactionIcon: {
+    paddingRight: 30,
+    paddingLeft: 30,
+    paddingBottom: 20,
+    paddingTop: 20,
+    
+  }
+
 });

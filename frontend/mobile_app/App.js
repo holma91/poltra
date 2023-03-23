@@ -5,6 +5,7 @@ import Navbar from './navigation/Navbar';
 export default function App() {
   return (
     <Navbar />
+    
   );
 }
 
