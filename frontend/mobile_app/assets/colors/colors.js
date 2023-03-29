@@ -9,7 +9,6 @@ const colors = {
     lightBlue: '#4ED4FF',
     red: '#FF4E4E',
     brightGreen: '#41D933'
-
 };
 
 export default colors;
