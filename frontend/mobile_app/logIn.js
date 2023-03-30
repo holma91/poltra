@@ -12,10 +12,9 @@ import {
 import colors from "./assets/colors/colors";
 
 
-  function logIn(){
+  export default function logIn(){
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
-    const isAuthenticated = false;
 
     return(
       <View style={styles.container}>
@@ -98,5 +97,3 @@ import colors from "./assets/colors/colors";
     },
   });
 
-
-  export default logIn;
