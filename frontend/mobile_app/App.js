@@ -24,7 +24,6 @@ export default function App() {
 
   // If the user is authenticated, show the app with the Navbar
   return (
-
     <NavigationContainer>
       <Navbar />
     </NavigationContainer>
