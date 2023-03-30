@@ -28,6 +28,7 @@ const HomeStack = () => {
   );
 };
 
+// TabNavigation taget från tidigare NavBar, bör kanske göras om med <Tab.Screen>?
 const TabNavigator = () => {
   return (
     <Tab.Navigator
