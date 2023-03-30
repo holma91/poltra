@@ -16,7 +16,6 @@ const SettingsLabel = 'Inställningar';
 
 function Navbar(){
     return (
-        <NavigationContainer>
             <Element.Navigator
             initialRouteName={HomeLabel}
             screenOptions={({ route }) =>
@@ -52,8 +51,6 @@ function Navbar(){
                 <Element.Screen name={SettingsLabel} component= {SettingsView} />
 
             </Element.Navigator>
-
-        </NavigationContainer>
     )
 }
 
