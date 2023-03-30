@@ -1,14 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import logIn from './login/logIn';
-import signUpPhoneNumber from './login/signUpPhoneNumber';
-import signUp from './login/signUp';
-import Navbar from './navigation/Navbar';
-import phoneNumberConfirmation from './login/phoneNumberConfirmation';
+import React, { useContext } from "react";
 
-export default function App() {
+import AuthStack from "./navigation/AuthStack";
+import AppStack from "./navigation/AppStack";
+
+import AppNav from "./navigation/AppNav";
+
+import { AuthProvider } from "./context/AuthContext";
+import { NavigationContainer } from "@react-navigation/native";
+
+const App = () => {
   return (
-    phoneNumberConfirmation()
+    <AuthProvider>
+      <AppNav />
+    </AuthProvider>
   );
-}
+};
 
+export default App;
