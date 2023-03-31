@@ -1,10 +1,36 @@
-import { StyleSheet, Text, View, ScrollView, Settings } from "react-native";
+import React, { useContext, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Settings,
+  Button,
+} from "react-native";
+
+import { AuthContext } from "../context/AuthContext";
 
 const SettingsScreen = ({ navigation }) => {
+  const { logout } = useContext(AuthContext);
+
   return (
     <ScrollView style={styles.wrapper}>
       <View style={styles.container}>
         <Text style={styles.titleText}>Inställningar</Text>
+      </View>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: 50,
+        }}
+      >
+        <Button
+          title="Log Out"
+          onPress={() => {
+            logout();
+          }}
+        />
       </View>
     </ScrollView>
   );
