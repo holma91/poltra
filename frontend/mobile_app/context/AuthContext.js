@@ -33,9 +33,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
+  {
+    /** useEffect(() => {
     isLoggedIn();
-  }, []);
+  }, []); */
+  }
 
   return (
     <AuthContext.Provider value={{ login, logout, isLoading, userToken }}>
