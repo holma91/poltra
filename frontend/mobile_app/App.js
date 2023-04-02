@@ -1,30 +1,40 @@
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import logIn from './login/logIn';
-import signUpPhoneNumber from './login/signUpPhoneNumber';
-import signUp from './login/signUp';
-import Navbar from './navigation/Navbar';
 import React, { useState } from 'react';
-import phoneNumberConfirmation from './login/phoneNumberConfirmation';
+import AuthContext from './AuthContext';
+import Navbar from './navigation/Navbar';
+import PhoneNumberConfirmation from './login/PhoneNumberConfirmation';
+import LogIn from './login/LogIn';
+import SignUpPhoneNumber from './login/SignUpPhoneNumber';
+import SignUp from './login/SignUp';
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Handle authentication status change
-  // const handleAuthentication = (status) => {
+  // const handleAuth = (status) => {
   //   setIsAuthenticated(status);
   // }
 
-  // If the user is not authenticated, show the login screen
   if (!isAuthenticated) {
-    return <logIn />; // det kanske är bra om logIn har en onAuthentication funktion
-    // phoneNumberConfirmation()
+    return(
+      <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
+          <Stack.Screen name="LogIn" component={LogIn} options={{ headerShown: false }}/>
+          <Stack.Screen name="SignUpPhoneNumber" component={SignUpPhoneNumber} options={{ headerShown: false }}/>
+          <Stack.Screen name="PhoneNumberConfirmation" component={PhoneNumberConfirmation} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      </AuthContext.Provider>
+    )
   }
 
-  // If the user is authenticated, show the app with the Navbar
   return (
-
     <NavigationContainer>
       <Navbar />
     </NavigationContainer>
