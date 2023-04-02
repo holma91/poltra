@@ -1,18 +1,16 @@
 // this is the second screen the user sees when trying to sign up
 
 import React, {useState, useRef} from 'react';
-
 import { View, Text, Alert, StyleSheet, TouchableOpacity } from 'react-native';
-
 import PhoneInput from 'react-native-phone-number-input';
 import colors from '../assets/colors/colors';
+import { useNavigation } from '@react-navigation/native';
+import PhoneNumberConfirmation from './PhoneNumberConfirmation';
 
-export default function signUpPhoneNumber() {
-
+function SignUpPhoneNumber() {
   const [phoneNumber, setPhoneNumber] = useState('');
-
   const phoneInput = useRef(null);
-
+  const navigation = useNavigation();
   const validPhoneNumber = () => {
     // check number is +46 and then 9 numbers after. 
   }
@@ -21,7 +19,9 @@ export default function signUpPhoneNumber() {
     <View style={styleSheet.MainContainer}>
 
       <Text style={styleSheet.heading}> Enter your {'\n'}Phone Number </Text>
-
+      <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                <Text style={styleSheet.editButton}>Edit Username Or Password</Text>
+      </TouchableOpacity>
       <PhoneInput
         ref={phoneInput}
         defaultValue={phoneNumber}
@@ -35,8 +35,7 @@ export default function signUpPhoneNumber() {
           setPhoneNumber(text);
         }}
       />
-
-      <TouchableOpacity  style={styleSheet.button}>
+      <TouchableOpacity style={styleSheet.button} onPress={() => navigation.navigate('PhoneNumberConfirmation')}>
         <Text style={styleSheet.buttonText}>Continue</Text>
       </TouchableOpacity >
     </View>
@@ -56,7 +55,7 @@ const styleSheet = StyleSheet.create({
     fontSize: 32,
     textAlign: 'center',
     paddingBottom: 0,
-    marginBottom: 200,
+    marginBottom: 20,
     marginTop: -150,
     color: colors.offBlack
   },
@@ -64,6 +63,7 @@ const styleSheet = StyleSheet.create({
   phoneNumberView: {
     width: '80%',
     borderRadius:10,
+    marginTop: 180,
     height: 55,
     backgroundColor: colors.white
   },
@@ -72,7 +72,7 @@ const styleSheet = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius:10,
-    marginTop: 35,
+    marginTop: 20,
     width: '80%',
     padding: 8,
     backgroundColor: colors.blue,
@@ -82,5 +82,12 @@ const styleSheet = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     color: colors.white
+  },
+  editButton:{
+    fontSize: 20,
+    textAlign: 'center',
+    color: colors.blue
   }
 });
+
+export default SignUpPhoneNumber;

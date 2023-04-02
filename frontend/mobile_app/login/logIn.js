@@ -3,12 +3,14 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import colors from "../assets/colors/colors";
+import { useNavigation } from '@react-navigation/native';
 
 
-
-export default function logIn(){
+function LogIn(){
   const[email, setEmail] = useState("");
   const[password, setPassword] = useState("");
+
+  const navigation = useNavigation();
   
   return (
     <View style={styles.container}>
@@ -36,7 +38,7 @@ export default function logIn(){
       <TouchableOpacity style={styles.loginBtn}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
         <Text style={styles.signUpText}>Sign Up</Text>
       </TouchableOpacity>
 
@@ -93,3 +95,5 @@ const styles = StyleSheet.create({
     color:colors.offBlack
   }
 });
+
+export default LogIn;

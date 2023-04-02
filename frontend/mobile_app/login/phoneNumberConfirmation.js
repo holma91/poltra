@@ -1,17 +1,33 @@
+
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, Button, Text, TouchableOpacity, View } from "react-native";
 import colors from '../assets/colors/colors';
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { SafeAreaViewBase } from "react-native";
+import SignUpPhoneNumber from "./SignUpPhoneNumber";
+import { useNavigation } from '@react-navigation/native';
+import AuthContext from '../AuthContext';
+import { useContext } from "react";
 
-export default function phoneNumberConfirmation(){
-    const [phoneNumber, setPhoneNumber] = useState('');
+
+function PhoneNumberConfirmation(props){
+    const [code, setCode] = useState('');
+    const navigation = useNavigation();
+    const { setIsAuthenticated } = useContext(AuthContext);
+
+    const handleCodeFilled = () => {
+        if (true) { // Replace with your verification code
+           setIsAuthenticated(true);
+        } else {
+          alert('Invalid verification code');
+        }
+      }
 
     return (
         <View style={styleSheet.MainContainer}>
             <Text style={styleSheet.prompt}>Enter the code we sent you</Text>
             <Text style={styleSheet.message}>Your Phone Number will be used to verify you. You will be able to change it later.</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('SignUpPhoneNumber')}>
                 <Text style={styleSheet.button}>Edit Phone Number</Text>
             </TouchableOpacity>
             <OTPInputView 
@@ -20,7 +36,7 @@ export default function phoneNumberConfirmation(){
                 autoFocusOnLoad
                 codeInputFieldStyle={styleSheet.underlineStyleBase}
                 codeInputHighlightStyle={styleSheet.underlineStyleHighLighted}
-            
+                onCodeFilled = {handleCodeFilled}
             ></OTPInputView>
         </View>
     );
@@ -64,3 +80,5 @@ const styleSheet = StyleSheet.create({
     },
   
   });
+
+  export default PhoneNumberConfirmation;
