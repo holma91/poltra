@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { WebView } from "react-native-webview";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const HomeScreen = ({ navigation }) => {
   const [articleStates, setArticleStates] = useState(
@@ -36,6 +37,7 @@ const HomeScreen = ({ navigation }) => {
     });
   };
 
+
   const [expandedArticleIndex, setExpandedArticleIndex] = useState(-1);
 
   const handleExpand = (index) => {
@@ -50,39 +52,49 @@ const HomeScreen = ({ navigation }) => {
     setExpandedArticleIndex(-1);
   };
 
+  
+
   return (
     <ScrollView style={styles.wrapper}>
       {database.slice(0, 5).map((article, index) => {
         const isExpanded = articleStates[index];
         const reaction = articleReactions[index];
-        const likeColor = reaction === "like" ? "green" : "green";
+        const likeColor = reaction === 'like' ? 'green' : 'green';
         //const neutralColor = reaction === null ? 'blue' : 'grey';
-        const dislikeColor = reaction === "dislike" ? "red" : "red";
+        const dislikeColor = reaction === 'dislike' ? 'red' : 'red';
         return (
           <View style={styles.container} key={article.description}>
-            <View style={styles.categoryContainer}>
-              <Text style={styles.category}>Brott</Text>
+            
+            <View style={styles.categoryContainer}> 
+              <Text style={{ ...styles.category, backgroundColor: 'red' }}>Brott</Text> 
               {/* change so that it uses a key, for instance key={article.category} */}
-              <Text style={styles.category}>SE</Text>
+              <Text style={styles.category}>EU</Text>
             </View>
-
+  
             <Image source={{ uri: article.urlToImage }} style={styles.image} />
             <Text style={styles.titleText}>{article.title}</Text>
             <Text style={styles.content}>{article.content}</Text>
-
+  
             <View style={styles.reactionContainer}>
-              <TouchableHighlight
-                onPress={() => handleReactionPress(index, "like")}
-                underlayColor="transparent"
-              >
-                <IonIcon
+
+              <TouchableHighlight onPress={() => handleReactionPress(index, 'like')} underlayColor="transparent">
+                <MaterialCommunityIcons
                   style={styles.reactionIcon}
-                  name={reaction === "like" ? "thumbs-up" : "thumbs-up-outline"}
+                  name={reaction === 'like' ? 'thumb-up' : 'thumb-up-outline'}
                   color={likeColor}
-                  size={75}
+                  size={90}
                 />
               </TouchableHighlight>
 
+              <TouchableHighlight onPress={() => handleReactionPress(index, 'dislike')} underlayColor="transparent" >
+                <MaterialCommunityIcons
+                  style={styles.reactionIcon}
+                  name={reaction === 'dislike' ? 'thumb-down' : 'thumb-down-outline'}
+                  color={dislikeColor}
+                  size={90}
+                />
+              </TouchableHighlight>
+  
               {/* <TouchableHighlight onPress={() => handleReactionPress(index, null)} underlayColor="transparent">
                 <IonIcon
                   style={styles.reactionIcon}
@@ -91,39 +103,31 @@ const HomeScreen = ({ navigation }) => {
                   size={75}
                 />
               </TouchableHighlight> */}
-
-              <TouchableHighlight
-                onPress={() => handleReactionPress(index, "dislike")}
-                underlayColor="transparent"
-              >
-                <IonIcon
-                  style={styles.reactionIcon}
-                  name={
-                    reaction === "dislike"
-                      ? "thumbs-down"
-                      : "thumbs-down-outline"
-                  }
-                  color={dislikeColor}
-                  size={75}
-                />
-              </TouchableHighlight>
+  
+              
             </View>
-
+  
             {isExpanded && (
               <View style={styles.articleContainer}>
-                <WebView source={{ uri: article.url }} style={{ flex: 1 }} />
-                <Button
-                  title="Close"
-                  onPress={() => handleExpand(index)}
-                  style={styles.closeButton}
-                />
+              <WebView
+                source={{ uri: article.url }}
+                style={{flex: 1
+                }}
+              />
+               <Button 
+               title="Stäng" 
+               onPress={() => handleExpand(index)} 
+               style={styles.closeButton} 
+              />
               </View>
             )}
-
+  
             <View style={styles.buttonContainer}>
               <Button
-                title={isExpanded ? "" : "Read more"}
-                onPress={() => handleExpand(index)}
+                title={isExpanded ? '' : 'Läs mer'}
+                onPress={() => 
+                handleExpand(index)
+                }
                 color="#007aff"
               />
             </View>
@@ -132,7 +136,8 @@ const HomeScreen = ({ navigation }) => {
       })}
     </ScrollView>
   );
-};
+  
+}
 
 export default HomeScreen;
 
@@ -140,83 +145,84 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingTop: 30,
     paddingBottom: 30,
-    paddingRight: 15,
-    paddingLeft: 15,
-    backgroundColor: "#759CEA",
+    paddingRight: 5,
+    paddingLeft: 5,
+    backgroundColor: '#EEEEEE',
     opacity: 1,
   },
   articleContainer: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    position: 'absolute',
+    top: 0, 
+    left: 0, 
+    right: 0, 
+    bottom: 0, 
     zIndex: 1,
-    borderRadius: "30%",
+    borderRadius: '30%',
     perspective: 1,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   container: {
-    backgroundColor: "#D9D9D9",
-    borderRadius: "30%",
-    marginBottom: 20,
-    marginTop: 35,
+    backgroundColor: '#FFFFFF',
+    borderRadius: '30%',
+    marginBottom: '2%',
+    marginTop: '2%',
   },
   titleText: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginTop: 10,
     paddingBottom: 10,
     paddingTop: 10,
-    paddingRight: "5%",
-    paddingLeft: "5%",
+    paddingRight: '5%',
+    paddingLeft: '5%',
   },
   content: {
     fontSize: 16,
     paddingBottom: 10,
     paddingTop: 10,
-    paddingRight: "5%",
-    paddingLeft: "5%",
+    paddingRight: '5%',
+    paddingLeft: '5%',
   },
   image: {
-    width: "90%",
+    width: '90%',
     height: 200,
     borderRadius: 20,
     marginTop: 20,
-    marginLeft: "5%",
+    marginLeft:'5%',
   },
   categoryContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 
-  category: {
+  category:{
     fontSize: 13,
-    textAlign: "center",
-    fontWeight: "bold",
-    color: "white",
-    width: "18%",
-    borderRadius: "7",
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'white',
+    width: '20%',
+    borderRadius: '11',
     marginTop: 15,
-    marginLeft: "5%",
-    backgroundColor: "blue",
+    marginLeft: '7%',
+    backgroundColor: 'blue',
+    padding: '01%',
     perspective: 1,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   buttonContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: 10,
     borderTopWidth: 1,
-    borderTopColor: "#ddd",
+    borderTopColor: '#ddd',
   },
   buttonText: {
     fontSize: 18,
-    color: "#007aff",
+    color: '#007aff',
   },
   reactionContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   reactionIcon: {
     paddingRight: 33,

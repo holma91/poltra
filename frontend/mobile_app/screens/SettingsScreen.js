@@ -69,7 +69,6 @@ const SettingsScreen = ({ navigation }) => {
         <Text style={[styles.buttonText, styles.deleteButtonText]}>Ta bort min profil</Text>
       </TouchableOpacity>
     </View>
-
   );
 };
 

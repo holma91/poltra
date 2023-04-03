@@ -9,6 +9,8 @@ import SettingsScreen from "../screens/SettingsScreen";
 
 import IonIcon from "react-native-vector-icons/Ionicons";
 
+import colors from "../assets/colors/colors";
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -52,7 +54,7 @@ const TabNavigator = () => {
             icon = focused ? "settings" : "settings-outline";
           }
 
-          tintColor = "#2768E7";
+          tintColor = colors.blue;
           // return the icons (render them)
           return <IonIcon name={icon} color={tintColor} size={25} />;
         },
