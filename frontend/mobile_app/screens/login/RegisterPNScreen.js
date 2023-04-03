@@ -5,23 +5,41 @@ import React, {useState, useRef} from 'react';
 import { View, Text, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 
 import PhoneInput from 'react-native-phone-number-input';
-import colors from '../assets/colors/colors';
+import colors from "../../assets/colors/colors";
 
-export default function signUpPhoneNumber() {
+import { AuthContext } from "../../context/AuthContext";
 
+const RegisterPNScreen = ({ navigation }) => {
+
+  
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneError, setPhoneError] = useState('');
 
   const phoneInput = useRef(null);
 
-  const validPhoneNumber = () => {
-    // check number is +46 and then 9 numbers after. 
+  function isValidPN (pn) {
+    const phoneRegex = /^\+46\d{9}$/;
+    return phoneRegex.test(pn);
+  }
+
+  function handlePNsignUp() {
+    if(!isValidPN(phoneNumber)){
+      console.log('Invalid email');
+      setPhoneError('Invalid Phone Number');
+      return;
+    }
+    console.log('Valid Phone number');
+
+    navigation.navigate('ConfirmPN');
   }
 
   return (
     <View style={styleSheet.MainContainer}>
 
       <Text style={styleSheet.heading}> Enter your {'\n'}Phone Number </Text>
-
+      {phoneError ? (
+            <Text style={styleSheet.phoneErrorText}>{phoneError}</Text>
+          ) : null}
       <PhoneInput
         ref={phoneInput}
         defaultValue={phoneNumber}
@@ -36,12 +54,14 @@ export default function signUpPhoneNumber() {
         }}
       />
 
-      <TouchableOpacity  style={styleSheet.button}>
+      <TouchableOpacity  style={styleSheet.button} onPress={handlePNsignUp}>
         <Text style={styleSheet.buttonText}>Continue</Text>
       </TouchableOpacity >
     </View>
   );
 };
+
+export default RegisterPNScreen;
 
 const styleSheet = StyleSheet.create({
 
@@ -72,7 +92,7 @@ const styleSheet = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius:10,
-    marginTop: 35,
+    marginTop: 25,
     width: '80%',
     padding: 8,
     backgroundColor: colors.blue,
@@ -82,5 +102,11 @@ const styleSheet = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     color: colors.white
-  }
+  },
+  phoneErrorText:{
+    color: colors.red,
+    fontSize: 14,
+    alignItems: 'center',
+  },
+
 });

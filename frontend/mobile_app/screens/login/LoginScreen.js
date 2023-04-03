@@ -13,6 +13,8 @@ import colors from "../../assets/colors/colors";
 
 import { AuthContext } from "../../context/AuthContext";
 
+import { useNavigation } from '@react-navigation/native';
+
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -20,22 +22,26 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>Political Transparency.</Text>
+      <Text style={styles.logo}>Log In to</Text>
+      <Text style={styles.polText}>Political Transparency.</Text>
 
       <View style={styles.wrapper}>
         <TextInput
           style={styles.input}
           value={email}
-          placeholder="Enter email"
+          placeholder="Email..."
+          placeholderTextColor="#1E1E1E"
           onChangeText={(text) => setEmail(text)}
         />
-
+      </View>
+      <View style={styles.wrapper}>
         <TextInput
+          secureTextEntry
           style={styles.input}
           value={password}
-          placeholder="Enter password"
+          placeholder="Password..."
+          placeholderTextColor="#1E1E1E"
           onChangeText={(text) => setPassword(text)}
-          secureTextEntry
         />
       </View>
 
@@ -43,15 +49,12 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.forgot}>Forgot Password?</Text>
       </TouchableOpacity>
 
-      <Button
-        title="Login"
-        onPress={() => {
-          login();
-        }}
-      />
+      <TouchableOpacity style={styles.loginBtn} onPress={() => {login();}}>
+        <Text style={styles.loginText}>LOGIN</Text>
+      </TouchableOpacity>
 
-      <TouchableOpacity>
-        <Text style={styles.signUpText}>Sign Up</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <Text style={styles.signUpText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
     </View>
   );
@@ -68,26 +71,34 @@ const styles = StyleSheet.create({
   },
   logo: {
     fontWeight: "bold",
-    fontSize: 45,
+    fontSize: 35,
     color: colors.offBlack,
-    marginBottom: 50,
+    textAlign: "center",
+    marginTop: -100,
+  },
+  polText: {
+    fontWeight: "bold",
+    fontSize: 45,
+    color: colors.blue,
+    textAlign: "center",
+    marginBottom: 75,
   },
   wrapper: {
-    width: "80%",
-    justifyContent: "center",
+    width:"80%",
+    backgroundColor:colors.lightGrey,
+    borderRadius:25,
+    height:50,
+    marginBottom:20,
+    justifyContent:"center",
+    padding:20
   },
   input: {
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: "#bbb",
-    borderRadius: 5,
-    paddingHorizontal: 14,
-    //height: 50,
-    //color: colors.black,
+    height:50,
+    color:colors.black
   },
   forgot: {
     color: colors.offBlack,
-    fontSize: 11,
+    fontSize: 14,
   },
   loginBtn: {
     width: "80%",
@@ -104,5 +115,7 @@ const styles = StyleSheet.create({
   },
   signUpText: {
     color: colors.offBlack,
+    fontSize: 14,
+
   },
 });
