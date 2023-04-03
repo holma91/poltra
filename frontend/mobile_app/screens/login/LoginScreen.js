@@ -30,7 +30,7 @@ const LoginScreen = ({ navigation }) => {
           style={styles.input}
           value={email}
           placeholder="Email..."
-          placeholderTextColor="#1E1E1E"
+          placeholderTextColor={colors.offBlack}
           onChangeText={(text) => setEmail(text)}
         />
       </View>
@@ -40,7 +40,7 @@ const LoginScreen = ({ navigation }) => {
           style={styles.input}
           value={password}
           placeholder="Password..."
-          placeholderTextColor="#1E1E1E"
+          placeholderTextColor={colors.offBlack}
           onChangeText={(text) => setPassword(text)}
         />
       </View>

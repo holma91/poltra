@@ -80,7 +80,7 @@ const RegisterScreen = ({ navigation }) => {
           style={styles.input}
           value={email}
           placeholder="Email..."
-          placeholderTextColor="#1E1E1E"
+          placeholderTextColor={colors.offBlack}
           onChangeText={handleEmailChange}
         />
       </View>
@@ -90,7 +90,7 @@ const RegisterScreen = ({ navigation }) => {
           style={styles.input}
           value={password}
           placeholder="Password..."
-          placeholderTextColor="#1E1E1E"
+          placeholderTextColor={colors.offBlack}
           onChangeText={handlePasswordChange}
           secureTextEntry
         />
@@ -101,7 +101,7 @@ const RegisterScreen = ({ navigation }) => {
           style={styles.input}
           value={confirmPassword}
           placeholder="Confirm Password..."
-          placeholderTextColor="#1E1E1E"
+          placeholderTextColor={colors.offBlack}
           onChangeText={(text) => setConfirmPassword(text)}
           secureTextEntry
         />
