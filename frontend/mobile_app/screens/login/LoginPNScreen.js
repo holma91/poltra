@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, Button, Text, TouchableOpacity, View } from "react-native";
-import colors from '../assets/colors/colors';
+import colors from "../../assets/colors/colors";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { SafeAreaViewBase } from "react-native";
 
-export default function phoneNumberConfirmation(){
+const LoginPNScreen = ({ navigation }) => {
     const [phoneNumber, setPhoneNumber] = useState('');
 
     return (
         <View style={styleSheet.MainContainer}>
             <Text style={styleSheet.prompt}>Enter the code we sent you</Text>
             <Text style={styleSheet.message}>Your Phone Number will be used to verify you. You will be able to change it later.</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('RegisterPN')}>
                 <Text style={styleSheet.button}>Edit Phone Number</Text>
             </TouchableOpacity>
             <OTPInputView 
@@ -26,6 +26,8 @@ export default function phoneNumberConfirmation(){
     );
 };
 
+export default LoginPNScreen;
+
 const styleSheet = StyleSheet.create({
 
     MainContainer: {
@@ -39,6 +41,7 @@ const styleSheet = StyleSheet.create({
         paddingHorizontal: 30,
         textAlign: 'center',
         paddingBottom: 20,
+        color: colors.black,
       },
     prompt: {
         fontSize: 24,
