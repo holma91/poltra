@@ -11,7 +11,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 const RegisterPNScreen = ({ navigation }) => {
 
-  
+
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneError, setPhoneError] = useState('');
 
@@ -36,7 +36,7 @@ const RegisterPNScreen = ({ navigation }) => {
   return (
     <View style={styleSheet.MainContainer}>
 
-      <Text style={styleSheet.heading}> Enter your {'\n'}Phone Number </Text>
+      <Text style={styleSheet.heading}> Skriv in ditt {'\n'}telefonnummer</Text>
       {phoneError ? (
             <Text style={styleSheet.phoneErrorText}>{phoneError}</Text>
           ) : null}
@@ -55,7 +55,7 @@ const RegisterPNScreen = ({ navigation }) => {
       />
 
       <TouchableOpacity  style={styleSheet.button} onPress={handlePNsignUp}>
-        <Text style={styleSheet.buttonText}>Continue</Text>
+        <Text style={styleSheet.buttonText}>Fortsätt</Text>
       </TouchableOpacity >
     </View>
   );
@@ -76,7 +76,7 @@ const styleSheet = StyleSheet.create({
     fontSize: 32,
     textAlign: 'center',
     paddingBottom: 0,
-    marginBottom: 200,
+    marginBottom: 50,
     marginTop: -150,
     color: colors.offBlack
   },
@@ -96,10 +96,11 @@ const styleSheet = StyleSheet.create({
     width: '80%',
     padding: 8,
     backgroundColor: colors.blue,
+    padding: 20
   },
 
   buttonText:{
-    fontSize: 20,
+    fontSize: 16,
     textAlign: 'center',
     color: colors.white
   },

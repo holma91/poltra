@@ -46,7 +46,7 @@ const SettingsScreen = ({ navigation }) => {
       <View style={styles.section}>
         <Text style={styles.sectionHeader}>Ändra telefonnummer</Text>
         <View style={styles.phoneRow}>
-        
+
           <TextInput
             style={[styles.input, { flex: 0.7 }]}
             placeholder="telefonnummer"
@@ -58,12 +58,9 @@ const SettingsScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>Spara </Text>
           </TouchableOpacity>
         </View>
-          <Button
-            title="Log Out"
-            onPress={() => {
-              logout();
-            }}
-          />
+          <TouchableOpacity style={[styles.button, styles.logoutButton]} onPress={() => {logout()}}>
+            <Text style={[styles.buttonText, styles.deleteButtonText]}>Logga ut</Text>
+          </TouchableOpacity>
       </View>
       <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={handleDeleteProfile}>
         <Text style={[styles.buttonText, styles.deleteButtonText]}>Ta bort min profil</Text>
@@ -97,7 +94,7 @@ const styles = StyleSheet.create({
   phoneRow: {
     flexDirection: 'row',
     alignItems: 'center',
-  },  
+  },
   label: {
     fontSize: 16,
   },
@@ -120,6 +117,10 @@ const styles = StyleSheet.create({
     left: 16,
     right: 16,
   },
+  logoutButton: {
+    backgroundColor: '#007bff',
+    marginTop: 50
+  },
   deleteButtonText: {
     color: '#fff',
   },
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
 
 export default SettingsScreen;
 
-  
-  
+
+
 
 

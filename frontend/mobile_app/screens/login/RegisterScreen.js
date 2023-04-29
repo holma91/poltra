@@ -26,7 +26,7 @@ const RegisterScreen = ({ navigation }) => {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return emailRegex.test(email);
   }
-  
+
   function isValidPassword(password) {
     // Password should be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -42,25 +42,25 @@ const RegisterScreen = ({ navigation }) => {
     setPassword(text);
     setPasswordError('');
   }
-  
+
   function handleSignUp() {
     if (!isValidEmail(email)) {
       // Email is not valid
-      console.log('Invalid email');
+      console.log('Ogiltig email');
       setEmailError('*')
       return;
     }
-  
+
     if (!isValidPassword(password)) {
       // Password is not valid
-      console.log('Invalid password');
+      console.log('Ogiltigt lösenord');
       setPasswordError('*')
       return;
     }
-  
+
     if (password !== confirmPassword) {
       // Password and confirm password do not match
-      console.log('Passwords do not match');
+      console.log('Lösenord matchar ej');
       return;
     }
     // register(email, password)
@@ -71,16 +71,16 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>Sign Up To</Text>
+      <Text style={styles.logo}>Poltra.</Text>
 
-      <Text style={styles.polText}>Political Transparency.</Text>
+      <Text style={styles.polText}>Skapa ett konto</Text>
 
       <View style={styles.wrapper}>
         <TextInput
           style={styles.input}
           value={email}
-          placeholder="Email..."
-          placeholderTextColor={colors.offBlack}
+          placeholder="example@domain.com"
+          placeholderTextColor={colors.darkGrey}
           onChangeText={handleEmailChange}
         />
       </View>
@@ -89,8 +89,8 @@ const RegisterScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           value={password}
-          placeholder="Password..."
-          placeholderTextColor={colors.offBlack}
+          placeholder="password"
+          placeholderTextColor={colors.darkGrey}
           onChangeText={handlePasswordChange}
           secureTextEntry
         />
@@ -100,27 +100,27 @@ const RegisterScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           value={confirmPassword}
-          placeholder="Confirm Password..."
-          placeholderTextColor={colors.offBlack}
+          placeholder="confirm password"
+          placeholderTextColor={colors.darkGrey}
           onChangeText={(text) => setConfirmPassword(text)}
           secureTextEntry
         />
       </View>
       {emailError ? (
-            <Text style={styles.errorEmailText}>Invalid email</Text>
+            <Text style={styles.errorEmailText}>Ogiltig email</Text>
           ) : null}
       {passwordError ? (
-            <Text style={styles.errorPasswordText}>Invalid password, password has to be atleast 8 characters long, and has to contain atleast one uppercase letter, one lowercase letter and one digit.</Text>
+            <Text style={styles.errorPasswordText}>Ogiltigt lösenord, måste innehålla minst 8 tecken varav minst en stor bokstav, en liten bokstav och en siffra.</Text>
           ) : null}
 
 
       <TouchableOpacity style={styles.loginBtn} onPress={handleSignUp}>
-        <Text style={styles.continueText}>Continue</Text>
+        <Text style={styles.continueText}>Fortsätt</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.alreadyHaveAccountText}>
-          Already have an account? Log In
+          Har du redan ett konto? Logga in här
         </Text>
       </TouchableOpacity>
     </View>
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     marginTop: -100,
   },
   polText: {
-    fontWeight: "bold",
+    fontWeight: "normal",
     fontSize: 45,
     color: colors.blue,
     textAlign: "center",
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     marginBottom:20,
     justifyContent:"center",
     padding:20,
-    
+
   },
   input: {
     height:50,
