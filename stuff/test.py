@@ -1,14 +1,27 @@
+import json
 import os
-import openai
+import asyncio
+import aiohttp
+import requests
+from pydantic import BaseModel
+from dotenv import load_dotenv
+from Scraper import Scraper
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+load_dotenv()
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+NEWSAPI_API_KEY = os.environ.get('NEWSAPI_API_KEY')
+MEDIASTACK_API_KEY = os.environ.get('MEDIASTACK_API_KEY')
 
-response = openai.Completion.create(
-    model="text-davinci-003",
-    prompt="A neutron star is the collapsed core of a massive supergiant star, which had a total mass of between 10 and 25 solar masses, possibly more if the star was especially metal-rich.[1] Neutron stars are the smallest and densest stellar objects, excluding black holes and hypothetical white holes, quark stars, and strange stars.[2] Neutron stars have a radius on the order of 10 kilometres (6.2 mi) and a mass of about 1.4 solar masses.[3] They result from the supernova explosion of a massive star, combined with gravitational collapse, that compresses the core past white dwarf star density to that of atomic nuclei.\n\nTl;dr",
-    temperature=0.7,
-    max_tokens=60,
-    top_p=1.0,
-    frequency_penalty=0.0,
-    presence_penalty=1,
-)
+MEDIASTACK_BASE = 'http://api.mediastack.com/v1'
+NEWSAPI_BASE = 'https://newsapi.org/v2'
+
+def get_metadata():
+    sources = ['di.se', 'DN.se', 'svd', ]
+    countries = "se"
+    res = requests.get(f"{MEDIASTACK_BASE}/news?countries={countries}&access_key={MEDIASTACK_API_KEY}")
+    articles =  res.json()
+    return list(filter(lambda article: article['source'] in sources, articles['data']))
+
+
+res = get_metadata()
+print(json.dumps(res))

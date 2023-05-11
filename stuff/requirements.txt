@@ -2,3 +2,4 @@ aiohttp
 pydantic
 openai
 lxml
+dotenv
