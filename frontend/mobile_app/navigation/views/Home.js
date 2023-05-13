@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, ScrollView, Image, Button } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Image,
+  Button,
+} from 'react-native';
 import database from '../../assets/data/database.json';
 import React, { useState } from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -53,19 +60,21 @@ export default function Home({ navigation }) {
         const dislikeColor = reaction === 'dislike' ? 'red' : 'red';
         return (
           <View style={styles.container} key={article.description}>
-            
-            <View style={styles.categoryContainer}> 
-              <Text style={styles.category}>Brott</Text> 
+            <View style={styles.categoryContainer}>
+              <Text style={styles.category}>Brott</Text>
               {/* change so that it uses a key, for instance key={article.category} */}
               <Text style={styles.category}>SE</Text>
             </View>
-  
+
             <Image source={{ uri: article.urlToImage }} style={styles.image} />
             <Text style={styles.titleText}>{article.title}</Text>
             <Text style={styles.content}>{article.content}</Text>
-  
+
             <View style={styles.reactionContainer}>
-              <TouchableHighlight onPress={() => handleReactionPress(index, 'like')} underlayColor="transparent">
+              <TouchableHighlight
+                onPress={() => handleReactionPress(index, 'like')}
+                underlayColor="transparent"
+              >
                 <IonIcon
                   style={styles.reactionIcon}
                   name={reaction === 'like' ? 'thumbs-up' : 'thumbs-up-outline'}
@@ -73,7 +82,7 @@ export default function Home({ navigation }) {
                   size={75}
                 />
               </TouchableHighlight>
-  
+
               {/* <TouchableHighlight onPress={() => handleReactionPress(index, null)} underlayColor="transparent">
                 <IonIcon
                   style={styles.reactionIcon}
@@ -82,28 +91,35 @@ export default function Home({ navigation }) {
                   size={75}
                 />
               </TouchableHighlight> */}
-  
-              <TouchableHighlight onPress={() => handleReactionPress(index, 'dislike')} underlayColor="transparent" >
+
+              <TouchableHighlight
+                onPress={() => handleReactionPress(index, 'dislike')}
+                underlayColor="transparent"
+              >
                 <IonIcon
                   style={styles.reactionIcon}
-                  name={reaction === 'dislike' ? 'thumbs-down' : 'thumbs-down-outline'}
+                  name={
+                    reaction === 'dislike'
+                      ? 'thumbs-down'
+                      : 'thumbs-down-outline'
+                  }
                   color={dislikeColor}
                   size={75}
                 />
               </TouchableHighlight>
             </View>
-  
+
             {isExpanded && (
               <View style={styles.articleContainer}>
-              <WebView
-                source={{ uri: article.url }}
-                style={{flex: 1
-                }}
-              />
-               <Button title="Close" onPress={() => handleExpand(index)} style={styles.closeButton} />
+                <WebView source={{ uri: article.url }} style={{ flex: 1 }} />
+                <Button
+                  title="Close"
+                  onPress={() => handleExpand(index)}
+                  style={styles.closeButton}
+                />
               </View>
             )}
-  
+
             <View style={styles.buttonContainer}>
               <Button
                 title={isExpanded ? '' : 'Read more'}
@@ -116,10 +132,7 @@ export default function Home({ navigation }) {
       })}
     </ScrollView>
   );
-  
 }
-
-
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -132,10 +145,10 @@ const styles = StyleSheet.create({
   },
   articleContainer: {
     position: 'absolute',
-    top: 0, 
-    left: 0, 
-    right: 0, 
-    bottom: 0, 
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     zIndex: 1,
     borderRadius: '30%',
     perspective: 1,
@@ -146,7 +159,6 @@ const styles = StyleSheet.create({
     borderRadius: '30%',
     marginBottom: 20,
     marginTop: 35,
-  
   },
   titleText: {
     fontSize: 24,
@@ -169,13 +181,13 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 20,
     marginTop: 20,
-    marginLeft:'5%',
+    marginLeft: '5%',
   },
   categoryContainer: {
     flexDirection: 'row',
   },
 
-  category:{
+  category: {
     fontSize: 13,
     textAlign: 'center',
     fontWeight: 'bold',
@@ -209,7 +221,5 @@ const styles = StyleSheet.create({
     paddingLeft: 33,
     paddingBottom: 20,
     paddingTop: 20,
-    
-  }
-
+  },
 });
