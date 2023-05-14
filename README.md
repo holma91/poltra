@@ -1,32 +1,25 @@
-# possible architecture
+### /stuff
 
-![](arch.png)
+the scraping. just activate the python environment, install packages and then run main.py.
 
-## some examples of what tech we could use
+```txt
+. env/bin/activate
+pip install -r requirements.txt
+python main.py
+```
 
-## frontend
+The output will be put in db.jsonl at /server.
 
-**mobile app**<br>
+### /server
 
-- typescript with react native? (IOS & Android)
-- swift? (IOS)
+A tiny server that exposes one endpoint /articles. It just uses db.jsonl as it's database. Start by running:
+`uvicorn main:app`
 
-## backend
+Then start ngrok (you need to have it downloaded on your computer) at port 8000:
+`./ngrok http 8000`
 
-**server**<br>
+Take the url from ngrok and take it to /frontend/mobile_app
 
-- fastAPI (python)?
-- node/deno (typescript)?
-- actix (rust)?
+### /frontend/mobile_app
 
-**database**<br>
-
-- postgres?
-
-**data collection service**<br>
-
-- python?
-
-## Deployment
-
-- azure enligt folke
+Put the ngrok url into App.js, then the app is ready to run. `npm install` first if you haven't, then just `npm run`.

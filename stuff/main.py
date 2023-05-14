@@ -56,7 +56,7 @@ def get_metadata():
 
 
 def get_svt_metadata():
-    with open("./data/test.json", "r") as json_file:
+    with open("./data/svt.json", "r") as json_file:
         data = json.load(json_file)
     return data
 
@@ -107,10 +107,6 @@ async def main():
     with open("../server/db.jsonl", "a") as jsonl_file:
         for article in articles:
             jsonl_file.write(json.dumps(article) + "\n")
-
-    # print(json.dumps(articles))
-
-    # we have all summarized articles, insert to db
 
 
 if __name__ == "__main__":
