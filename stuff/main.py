@@ -19,7 +19,7 @@ MEDIASTACK_BASE = "http://api.mediastack.com/v1"
 NEWSAPI_BASE = "https://newsapi.org/v2"
 
 
-def get_article(doc):
+def get_article(doc, metadata):
     # this function assumes that the source is svt
     title = doc.xpath('//*[@class="nyh_article__heading"]/text()')[0]
     intro = doc.xpath('//*[@class="nyh_article__lead"]/p/text()')
@@ -35,6 +35,10 @@ def get_article(doc):
         "title": title,
         "intro": intro_processed,
         "body": body_processed,
+        "url": metadata["url"],
+        "imageUrl": metadata["imageUrl"],
+        "category": metadata["category"],
+        "source": "svt",
     }
 
 
@@ -52,7 +56,7 @@ def get_metadata():
 
 
 def get_svt_metadata():
-    with open("./data/svt.json", "r") as json_file:
+    with open("./data/test.json", "r") as json_file:
         data = json.load(json_file)
     return data
 
@@ -92,7 +96,7 @@ async def main():
         for metadata in all_metadata:
             try:
                 doc = await scraper.get_html(metadata["url"])
-                article = get_article(doc)
+                article = get_article(doc, metadata)
                 articles.append(article)
             except Exception as e:
                 print(f"Error getting article at {metadata['url']}: {e}")
@@ -100,7 +104,11 @@ async def main():
 
     articles = summarize(articles)
 
-    print(json.dumps(articles))
+    with open("../server/db.jsonl", "a") as jsonl_file:
+        for article in articles:
+            jsonl_file.write(json.dumps(article) + "\n")
+
+    # print(json.dumps(articles))
 
     # we have all summarized articles, insert to db
 

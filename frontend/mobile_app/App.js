@@ -1,26 +1,48 @@
+import React from 'react';
+import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  useClerk,
+} from '@clerk/clerk-expo';
 import { NavigationContainer } from '@react-navigation/native';
+import Constants from 'expo-constants';
+
 import Navbar from './navigation/Navbar';
-import React, { useState } from 'react';
-import LogIn from './login/LogIn';
+import SignInWithOAuth from './components/SignInWithOAuth';
+import SignIn from './components/SignIn';
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-
-  // Handle authentication status change
-  // const handleAuthentication = (status) => {
-  //   setIsAuthenticated(status);
-  // }
-
-  // If the user is not authenticated, show the login screen
-  if (!isAuthenticated) {
-    return <LogIn />; // det kanske är bra om logIn har en onAuthentication funktion
-    // phoneNumberConfirmation()
-  }
-
-  // If the user is authenticated, show the app with the Navbar
   return (
-    <NavigationContainer>
-      <Navbar />
-    </NavigationContainer>
+    <ClerkProvider publishableKey={Constants.expoConfig.extra.clerkKey}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <SignedIn>
+          <NavigationContainer>
+            <Navbar />
+          </NavigationContainer>
+        </SignedIn>
+        <SignedOut>
+          <SignIn />
+        </SignedOut>
+      </SafeAreaView>
+    </ClerkProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <Navbar />
+//     </NavigationContainer>
+//   );
+// }

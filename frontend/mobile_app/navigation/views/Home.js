@@ -124,6 +124,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   wrapper: {
+    flex: 1,
     paddingTop: 30,
     paddingBottom: 30,
     paddingRight: 15,
