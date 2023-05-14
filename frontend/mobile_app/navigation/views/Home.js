@@ -11,6 +11,8 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import { WebView } from 'react-native-webview';
 
+const NGROK_TUNNEL = 'https://8c50-83-255-121-67.ngrok-free.app';
+
 export default function Home() {
   const [articles, setArticles] = useState([]);
   const [articleStates, setArticleStates] = useState([]);
@@ -33,7 +35,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8000/articles/')
+    fetch(`${NGROK_TUNNEL}/articles/`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
