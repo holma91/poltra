@@ -6,27 +6,15 @@ import {
   Image,
   Button,
 } from 'react-native';
-import database from '../../assets/data/database.json';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import { WebView } from 'react-native-webview';
 
-export default function Home({ navigation }) {
-  const [articleStates, setArticleStates] = useState(
-    database.slice(0, 5).map(() => false)
-  );
-  const [articleReactions, setArticleReactions] = useState(
-    database.slice(0, 5).map(() => null)
-  );
-
-  // const handlePress = (index) => {
-  //   setArticleStates((prev) => {
-  //     const newState = [...prev];
-  //     newState[index] = !prev[index];
-  //     return newState;
-  //   });
-  // };
+export default function Home() {
+  const [articles, setArticles] = useState([]);
+  const [articleStates, setArticleStates] = useState([]);
+  const [articleReactions, setArticleReactions] = useState([]);
 
   const handleReactionPress = (index, reaction) => {
     setArticleReactions((prev) => {
@@ -36,8 +24,6 @@ export default function Home({ navigation }) {
     });
   };
 
-  const [expandedArticleIndex, setExpandedArticleIndex] = useState(-1);
-
   const handleExpand = (index) => {
     setArticleStates((prev) => {
       const newState = [...prev];
@@ -46,29 +32,40 @@ export default function Home({ navigation }) {
     });
   };
 
-  const handleClose = () => {
-    setExpandedArticleIndex(-1);
-  };
+  useEffect(() => {
+    fetch('http://localhost:8000/articles/')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setArticles(data);
+        setArticleStates(data.map(() => false));
+        setArticleReactions(data.map(() => null));
+      })
+      .catch((error) => console.error('Error:', error));
+  }, []);
+
+  if (articles.length === 0) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <ScrollView style={styles.wrapper}>
-      {database.slice(0, 5).map((article, index) => {
+      {articles.map((article, index) => {
         const isExpanded = articleStates[index];
         const reaction = articleReactions[index];
         const likeColor = reaction === 'like' ? 'green' : 'green';
-        //const neutralColor = reaction === null ? 'blue' : 'grey';
+        const neutralColor = reaction === null ? 'blue' : 'grey';
         const dislikeColor = reaction === 'dislike' ? 'red' : 'red';
         return (
-          <View style={styles.container} key={article.description}>
+          <View style={styles.container} key={article.title}>
             <View style={styles.categoryContainer}>
-              <Text style={styles.category}>Brott</Text>
-              {/* change so that it uses a key, for instance key={article.category} */}
+              <Text style={styles.category}>Politik</Text>
               <Text style={styles.category}>SE</Text>
             </View>
 
-            <Image source={{ uri: article.urlToImage }} style={styles.image} />
+            <Image source={{ uri: article.imageUrl }} style={styles.image} />
             <Text style={styles.titleText}>{article.title}</Text>
-            <Text style={styles.content}>{article.content}</Text>
+            <Text style={styles.content}>{article.summary}</Text>
 
             <View style={styles.reactionContainer}>
               <TouchableHighlight
@@ -82,15 +79,6 @@ export default function Home({ navigation }) {
                   size={75}
                 />
               </TouchableHighlight>
-
-              {/* <TouchableHighlight onPress={() => handleReactionPress(index, null)} underlayColor="transparent">
-                <IonIcon
-                  style={styles.reactionIcon}
-                  name="icon för neutral eller nått"
-                  color={neutralColor}
-                  size={75}
-                />
-              </TouchableHighlight> */}
 
               <TouchableHighlight
                 onPress={() => handleReactionPress(index, 'dislike')}
