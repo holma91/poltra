@@ -1,0 +1,6 @@
+aiohttp
+requests
+pydantic
+openai
+lxml
+dotenv
