@@ -1,1 +1,2 @@
 
+2023-05-15 11:32:09,401 - INFO - error_code=None error_message='The server had an error while processing your request. Sorry about that!' error_param=None error_type=server_error message='OpenAI API error received' stream_error=False

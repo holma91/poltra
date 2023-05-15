@@ -73,8 +73,9 @@ def summarize(articles):
             frequency_penalty=0.0,
             presence_penalty=1,
         )
+        print(response)
         article["summary"] = response["choices"][0]["text"]
-        time.sleep(1)  # avoid rate limit
+        time.sleep(5)  # avoid rate limit
 
     return articles
 

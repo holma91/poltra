@@ -5,15 +5,22 @@ import {
   ScrollView,
   Image,
   Button,
-} from "react-native";
-import database from "../assets/data/database.json";
-import React, { useState } from "react";
-import IonIcon from "react-native-vector-icons/Ionicons";
-import { TouchableHighlight } from "react-native-gesture-handler";
-import { WebView } from "react-native-webview";
+} from 'react-native';
+import database from '../assets/data/database.json';
+import React, { useState, useEffect } from 'react';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { WebView } from 'react-native-webview';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+const NGROK_TUNNEL = 'https://8c50-83-255-121-67.ngrok-free.app';
+
+function removeNonLetters(str) {
+  return str.replace(/^[^a-zA-Z]+/, '');
+}
+
 const HomeScreen = ({ navigation }) => {
+  const [articles, setArticles] = useState([]);
   const [articleStates, setArticleStates] = useState(
     database.slice(0, 5).map(() => false)
   );
@@ -37,7 +44,6 @@ const HomeScreen = ({ navigation }) => {
     });
   };
 
-
   const [expandedArticleIndex, setExpandedArticleIndex] = useState(-1);
 
   const handleExpand = (index) => {
@@ -52,32 +58,50 @@ const HomeScreen = ({ navigation }) => {
     setExpandedArticleIndex(-1);
   };
 
-  
+  useEffect(() => {
+    fetch(`${NGROK_TUNNEL}/articles/`)
+      .then((response) => response.json())
+      .then((data) => {
+        setArticles(data);
+        setArticleStates(data.map(() => false));
+        setArticleReactions(data.map(() => null));
+      })
+      .catch((error) => console.error('Error:', error));
+  }, []);
+
+  if (articles.length === 0) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <ScrollView style={styles.wrapper}>
-      {database.slice(0, 5).map((article, index) => {
+      {articles.reverse().map((article, index) => {
         const isExpanded = articleStates[index];
         const reaction = articleReactions[index];
         const likeColor = reaction === 'like' ? 'green' : 'green';
         //const neutralColor = reaction === null ? 'blue' : 'grey';
         const dislikeColor = reaction === 'dislike' ? 'red' : 'red';
         return (
-          <View style={styles.container} key={article.description}>
-            
-            <View style={styles.categoryContainer}> 
-              <Text style={{ ...styles.category, backgroundColor: 'red' }}>Brott</Text> 
+          <View style={styles.container} key={article.title}>
+            <View style={styles.categoryContainer}>
+              <Text style={{ ...styles.category, backgroundColor: 'red' }}>
+                Politik
+              </Text>
               {/* change so that it uses a key, for instance key={article.category} */}
-              <Text style={styles.category}>EU</Text>
+              <Text style={styles.category}>SE</Text>
             </View>
-  
-            <Image source={{ uri: article.urlToImage }} style={styles.image} />
-            <Text style={styles.titleText}>{article.title}</Text>
-            <Text style={styles.content}>{article.content}</Text>
-  
-            <View style={styles.reactionContainer}>
 
-              <TouchableHighlight onPress={() => handleReactionPress(index, 'like')} underlayColor="transparent">
+            <Image source={{ uri: article.imageUrl }} style={styles.image} />
+            <Text style={styles.titleText}>{article.title}</Text>
+            <Text style={styles.content}>
+              {removeNonLetters(article.summary)}
+            </Text>
+
+            <View style={styles.reactionContainer}>
+              <TouchableHighlight
+                onPress={() => handleReactionPress(index, 'like')}
+                underlayColor="transparent"
+              >
                 <MaterialCommunityIcons
                   style={styles.reactionIcon}
                   name={reaction === 'like' ? 'thumb-up' : 'thumb-up-outline'}
@@ -86,15 +110,20 @@ const HomeScreen = ({ navigation }) => {
                 />
               </TouchableHighlight>
 
-              <TouchableHighlight onPress={() => handleReactionPress(index, 'dislike')} underlayColor="transparent" >
+              <TouchableHighlight
+                onPress={() => handleReactionPress(index, 'dislike')}
+                underlayColor="transparent"
+              >
                 <MaterialCommunityIcons
                   style={styles.reactionIcon}
-                  name={reaction === 'dislike' ? 'thumb-down' : 'thumb-down-outline'}
+                  name={
+                    reaction === 'dislike' ? 'thumb-down' : 'thumb-down-outline'
+                  }
                   color={dislikeColor}
                   size={90}
                 />
               </TouchableHighlight>
-  
+
               {/* <TouchableHighlight onPress={() => handleReactionPress(index, null)} underlayColor="transparent">
                 <IonIcon
                   style={styles.reactionIcon}
@@ -103,31 +132,23 @@ const HomeScreen = ({ navigation }) => {
                   size={75}
                 />
               </TouchableHighlight> */}
-  
-              
             </View>
-  
+
             {isExpanded && (
               <View style={styles.articleContainer}>
-              <WebView
-                source={{ uri: article.url }}
-                style={{flex: 1
-                }}
-              />
-               <Button 
-               title="Stäng" 
-               onPress={() => handleExpand(index)} 
-               style={styles.closeButton} 
-              />
+                <WebView source={{ uri: article.url }} style={{ flex: 1 }} />
+                <Button
+                  title="Stäng"
+                  onPress={() => handleExpand(index)}
+                  style={styles.closeButton}
+                />
               </View>
             )}
-  
+
             <View style={styles.buttonContainer}>
               <Button
                 title={isExpanded ? '' : 'Läs mer'}
-                onPress={() => 
-                handleExpand(index)
-                }
+                onPress={() => handleExpand(index)}
                 color="#007aff"
               />
             </View>
@@ -136,8 +157,7 @@ const HomeScreen = ({ navigation }) => {
       })}
     </ScrollView>
   );
-  
-}
+};
 
 export default HomeScreen;
 
@@ -152,10 +172,10 @@ const styles = StyleSheet.create({
   },
   articleContainer: {
     position: 'absolute',
-    top: 0, 
-    left: 0, 
-    right: 0, 
-    bottom: 0, 
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     zIndex: 1,
     borderRadius: '30%',
     perspective: 1,
@@ -188,13 +208,13 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 20,
     marginTop: 20,
-    marginLeft:'5%',
+    marginLeft: '5%',
   },
   categoryContainer: {
     flexDirection: 'row',
   },
 
-  category:{
+  category: {
     fontSize: 13,
     textAlign: 'center',
     fontWeight: 'bold',
