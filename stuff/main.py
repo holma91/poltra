@@ -56,7 +56,7 @@ def get_metadata():
 
 
 def get_svt_metadata():
-    with open("./data/svt.json", "r") as json_file:
+    with open("./data/svt2.json", "r") as json_file:
         data = json.load(json_file)
     return data
 
